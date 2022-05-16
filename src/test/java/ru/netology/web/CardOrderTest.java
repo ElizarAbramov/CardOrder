@@ -71,9 +71,20 @@ public class CardOrderTest {
     }
 
     @Test
-    public void shouldShowErrorNotificationWhenFieldsEmpty() {
-        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("");
+    public void shouldShowErrorNotificationWhenPhoneFieldEmpty() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Коротаев-Симохин Тимофей");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("");
+        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.className("button__content")).click();
+        String actualText = driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText().trim();
+        String expected = "Поле обязательно для заполнения";
+        assertEquals(expected, actualText);
+    }
+
+    @Test
+    public void shouldShowErrorNotificationWhenNameFieldEmpty() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79992345566");
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.className("button__content")).click();
         String actualText = driver.findElement(By.cssSelector("[data-test-id='name'].input_invalid .input__sub")).getText().trim();
